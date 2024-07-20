@@ -1,10 +1,12 @@
 mod command;
+mod device;
 
 use wgt::WasmNotSendSync;
 
-use crate::{BufferBinding, Device};
+use crate::BufferBinding;
 
 pub use command::DynCommandEncoder;
+pub use device::DynDevice;
 
 // TODO: docs
 pub trait DynResource: WasmNotSendSync + 'static {
@@ -57,24 +59,6 @@ pub trait DynQuerySet: DynResource + std::fmt::Debug {}
 pub trait DynRenderPipeline: DynResource + std::fmt::Debug {}
 pub trait DynTexture: DynResource + std::fmt::Debug {}
 pub trait DynTextureView: DynResource + std::fmt::Debug {}
-
-pub trait DynDevice {
-    unsafe fn destroy_buffer(&self, buffer: Box<dyn DynBuffer>);
-}
-
-impl<D: Device> DynDevice for D {
-    unsafe fn destroy_buffer(&self, mut buffer: Box<dyn DynBuffer>) {
-        // Ideally, we'd cast the box and then unbox it with `Box::into_inner`.
-        // Unfortunately, the latter is only available on nightly Rust.
-        //
-        // Another better alternative would be for `D::destroy_buffer` to take a `Box<D::A::Buffer>`.
-        // However, that would require casting the box first to `Box<dyn Any>` for which we need
-        // super trait casting (https://rust-lang.github.io/rfcs/3324-dyn-upcasting.html)
-        // which as of writing is still being stabilized.
-        let buffer = buffer.expect_downcast_mut();
-        unsafe { self.destroy_buffer(buffer) };
-    }
-}
 
 impl<'a> BufferBinding<'a, dyn DynBuffer> {
     pub fn expect_downcast<B: DynBuffer>(self) -> BufferBinding<'a, B> {
