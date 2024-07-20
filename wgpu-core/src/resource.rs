@@ -454,10 +454,8 @@ impl<A: HalApi> Drop for Buffer<A> {
 }
 
 impl<A: HalApi> Buffer<A> {
-    pub(crate) fn raw<'a>(&'a self, guard: &'a SnatchGuard) -> Option<&'a A::Buffer> {
-        self.raw
-            .get(guard)
-            .and_then(|raw| raw.as_any().downcast_ref())
+    pub(crate) fn raw<'a>(&'a self, guard: &'a SnatchGuard) -> Option<&'a dyn hal::DynBuffer> {
+        self.raw.get(guard).map(|b| b.as_ref())
     }
 
     pub(crate) fn try_raw<'a>(
@@ -1228,7 +1226,9 @@ impl Global {
 
         if let Ok(buffer) = hub.buffers.get(id) {
             let snatch_guard = buffer.device.snatchable_lock.read();
-            let hal_buffer = buffer.raw(&snatch_guard);
+            let hal_buffer = buffer
+                .raw(&snatch_guard)
+                .and_then(|b| b.as_any().downcast_ref());
             hal_buffer_callback(hal_buffer)
         } else {
             hal_buffer_callback(None)
