@@ -392,7 +392,7 @@ pub trait Api: Clone + fmt::Debug + Sized {
     type Instance: Instance<A = Self>;
     type Surface: Surface<A = Self>;
     type Adapter: Adapter<A = Self>;
-    type Device: Device<A = Self>;
+    type Device: DynDevice + Device<A = Self>;
 
     type Queue: Queue<A = Self>;
     type CommandEncoder: CommandEncoder<A = Self> + DynResource; // TODO(#5124): require DynCommandEncoder
