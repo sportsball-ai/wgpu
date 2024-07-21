@@ -328,7 +328,7 @@ impl Global {
                                     .raw
                                     .as_ref()
                                     .unwrap()
-                                    .present(suf.unwrap(), raw.take().unwrap())
+                                    .present(suf.unwrap(), &mut raw.take().unwrap())
                             }
                         }
                     }

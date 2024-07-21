@@ -1,5 +1,6 @@
 mod command;
 mod device;
+mod queue;
 mod surface;
 
 use wgt::WasmNotSendSync;
@@ -8,6 +9,7 @@ use crate::BufferBinding;
 
 pub use command::DynCommandEncoder;
 pub use device::DynDevice;
+pub use queue::DynQueue;
 pub use surface::{DynAcquiredSurfaceTexture, DynSurface};
 
 // TODO: docs

@@ -651,7 +651,7 @@ impl<A: hal::Api> Example<A> {
 
         let ctx = &mut self.contexts[self.context_index];
 
-        let surface_tex = unsafe {
+        let mut surface_tex = unsafe {
             self.surface
                 .acquire_texture(None, &ctx.fence)
                 .unwrap()
@@ -745,7 +745,8 @@ impl<A: hal::Api> Example<A> {
                     (&mut ctx.fence, ctx.fence_value),
                 )
                 .unwrap();
-            self.queue.present(&self.surface, surface_tex).unwrap();
+            self.queue.present(&self.surface, &mut surface_tex).unwrap();
+            drop(surface_tex);
             ctx.used_cmd_bufs.push(cmd_buf);
             ctx.used_views.push(surface_tex_view);
         };

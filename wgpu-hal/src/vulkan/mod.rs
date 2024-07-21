@@ -1118,7 +1118,7 @@ impl crate::Queue for Queue {
     unsafe fn present(
         &self,
         surface: &Surface,
-        texture: SurfaceTexture,
+        texture: &mut SurfaceTexture,
     ) -> Result<(), crate::SurfaceError> {
         let mut swapchain = surface.swapchain.write();
         let ssc = swapchain.as_mut().unwrap();

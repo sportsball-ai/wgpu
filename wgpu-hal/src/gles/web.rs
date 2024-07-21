@@ -221,7 +221,7 @@ pub struct Swapchain {
 impl Surface {
     pub(super) unsafe fn present(
         &self,
-        _suf_texture: super::Texture,
+        _suf_texture: &mut super::Texture,
         context: &AdapterContext,
     ) -> Result<(), crate::SurfaceError> {
         let gl = &context.glow_context;

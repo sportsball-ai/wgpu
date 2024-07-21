@@ -1785,7 +1785,7 @@ impl crate::Queue for super::Queue {
     unsafe fn present(
         &self,
         surface: &super::Surface,
-        texture: super::Texture,
+        texture: &mut super::Texture,
     ) -> Result<(), crate::SurfaceError> {
         unsafe { surface.present(texture, &self.shared.context) }
     }

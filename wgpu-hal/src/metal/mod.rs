@@ -451,7 +451,7 @@ impl crate::Queue for Queue {
     unsafe fn present(
         &self,
         _surface: &Surface,
-        texture: SurfaceTexture,
+        texture: &mut SurfaceTexture,
     ) -> Result<(), crate::SurfaceError> {
         let queue = &self.raw.lock();
         objc::rc::autoreleasepool(|| {

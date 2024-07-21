@@ -1112,7 +1112,7 @@ unsafe impl Sync for Surface {}
 impl Surface {
     pub(super) unsafe fn present(
         &self,
-        _suf_texture: super::Texture,
+        _suf_texture: &mut super::Texture,
         context: &AdapterContext,
     ) -> Result<(), crate::SurfaceError> {
         let gl = unsafe { context.get_without_egl_lock() };

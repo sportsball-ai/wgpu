@@ -141,7 +141,7 @@ impl crate::Queue for Context {
     unsafe fn present(
         &self,
         surface: &Context,
-        texture: Resource,
+        texture: &mut Resource,
     ) -> Result<(), crate::SurfaceError> {
         Ok(())
     }
