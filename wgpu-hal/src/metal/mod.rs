@@ -816,6 +816,8 @@ pub struct Fence {
     pending_command_buffers: Vec<(crate::FenceValue, metal::CommandBuffer)>,
 }
 
+impl crate::DynFence for Fence {}
+
 unsafe impl Send for Fence {}
 unsafe impl Sync for Fence {}
 
