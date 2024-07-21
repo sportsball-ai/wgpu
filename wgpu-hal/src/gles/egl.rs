@@ -1459,5 +1459,5 @@ impl crate::Surface for Surface {
             suboptimal: false,
         }))
     }
-    unsafe fn discard_texture(&self, _texture: super::Texture) {}
+    unsafe fn discard_texture(&self, _texture: &mut super::Texture) {}
 }

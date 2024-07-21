@@ -266,10 +266,10 @@ mod dynamic;
 
 pub(crate) use dynamic::impl_dyn_resource;
 pub use dynamic::{
-    DynAccelerationStructure, DynBindGroup, DynBindGroupLayout, DynBuffer, DynCommandBuffer,
-    DynCommandEncoder, DynComputePipeline, DynDevice, DynFence, DynPipelineCache,
-    DynPipelineLayout, DynQuerySet, DynRenderPipeline, DynResource, DynSampler, DynShaderModule,
-    DynSurfaceTexture, DynTexture, DynTextureView,
+    DynAccelerationStructure, DynAcquiredSurfaceTexture, DynBindGroup, DynBindGroupLayout,
+    DynBuffer, DynCommandBuffer, DynCommandEncoder, DynComputePipeline, DynDevice, DynFence,
+    DynPipelineCache, DynPipelineLayout, DynQuerySet, DynRenderPipeline, DynResource, DynSampler,
+    DynShaderModule, DynSurface, DynSurfaceTexture, DynTexture, DynTextureView,
 };
 
 use std::{
@@ -557,9 +557,11 @@ pub trait Surface: WasmNotSendSync {
     ///   [`self.acquire_texture`] that has not yet been passed to
     ///   [`Queue::present`].
     ///
+    ///  - The `texture` musn't be used afterwards.
+    ///
     /// [`SurfaceTexture`]: Api::SurfaceTexture
     /// [`self.acquire_texture`]: Surface::acquire_texture
-    unsafe fn discard_texture(&self, texture: <Self::A as Api>::SurfaceTexture);
+    unsafe fn discard_texture(&self, texture: &mut <Self::A as Api>::SurfaceTexture);
 }
 
 pub trait Adapter: WasmNotSendSync {

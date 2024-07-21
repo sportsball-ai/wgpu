@@ -929,7 +929,7 @@ impl crate::Surface for Surface {
             suboptimal: false,
         }))
     }
-    unsafe fn discard_texture(&self, _texture: Texture) {
+    unsafe fn discard_texture(&self, _texture: &mut Texture) {
         let mut swapchain = self.swap_chain.write();
         let sc = swapchain.as_mut().unwrap();
         sc.acquired_count -= 1;

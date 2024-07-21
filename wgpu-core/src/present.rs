@@ -408,7 +408,7 @@ impl Global {
                 match texture.inner.snatch(exclusive_snatch_guard).unwrap() {
                     resource::TextureInner::Surface { mut raw, parent_id } => {
                         if surface_id == parent_id {
-                            unsafe { suf.unwrap().discard_texture(raw.take().unwrap()) };
+                            unsafe { suf.unwrap().discard_texture(&mut raw.take().unwrap()) };
                         } else {
                             log::warn!("Surface texture is outdated");
                         }

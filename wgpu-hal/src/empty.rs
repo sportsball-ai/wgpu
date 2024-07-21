@@ -97,7 +97,7 @@ impl crate::Surface for Context {
     ) -> Result<Option<crate::AcquiredSurfaceTexture<Api>>, crate::SurfaceError> {
         Ok(None)
     }
-    unsafe fn discard_texture(&self, texture: Resource) {}
+    unsafe fn discard_texture(&self, texture: &mut Resource) {}
 }
 
 impl crate::Adapter for Context {
